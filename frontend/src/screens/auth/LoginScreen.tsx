@@ -1,23 +1,23 @@
 import React, { useRef } from 'react';
 import { SafeAreaView, StyleSheet, TextInput, View } from 'react-native';
-import InputField from '../../components/InputField';
-import CustomButton from '../../components/CustomButton';
-import useForm from '../../hooks/useForm';
-import { validateLogin } from '../../utils';
+
+import InputField from '@/components/InputField';
+import CustomButton from '@/components/CustomButton';
+import useForm from '@/hooks/useForm';
+import useAuth from '@/hooks/queries/useAuth';
+import { validateLogin } from '@/utils';
 
 function LoginScreen() {
+  const { loginMutation } = useAuth();
   const passwordRef = useRef<TextInput | null>(null);
-
   const login = useForm({
-    initialValue: {
-      email: '',
-      password: '',
-    },
+    initialValue: { email: '', password: '' },
     validate: validateLogin,
   });
 
   const handleSubmit = () => {
-    console.log(login.values);
+    console.log('login.values', login.values);
+    loginMutation.mutate(login.values);
   };
 
   return (
@@ -32,7 +32,6 @@ function LoginScreen() {
           returnKeyType="next"
           blurOnSubmit={false}
           onSubmitEditing={() => passwordRef.current?.focus()}
-          returnKeyLabel="next"
           {...login.getTextInputProps('email')}
         />
         <InputField
@@ -41,9 +40,8 @@ function LoginScreen() {
           error={login.errors.password}
           touched={login.touched.password}
           secureTextEntry
+          returnKeyType="join"
           onSubmitEditing={handleSubmit}
-          returnKeyLabel="join"
-          blurOnSubmit={false}
           {...login.getTextInputProps('password')}
         />
       </View>

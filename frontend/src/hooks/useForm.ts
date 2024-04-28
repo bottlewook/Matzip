@@ -34,7 +34,6 @@ function useForm<T>({ initialValue, validate }: UseFormProps<T>) {
 
   useEffect(() => {
     const newErrors = validate(values);
-    console.log(newErrors);
     setErrors(newErrors);
   }, [validate, values]);
 

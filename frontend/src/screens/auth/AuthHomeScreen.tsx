@@ -1,12 +1,14 @@
+import React from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
-import { View, StyleSheet, SafeAreaView, Image, Dimensions } from 'react-native';
-import { AuthStackParamList } from '../../navigations/stack/AuthStackNavigator';
-import { authNavigations } from '../../constants/navigations';
-import CustomButton from '../../components/CustomButton';
+import { Dimensions, Image, SafeAreaView, StyleSheet, View } from 'react-native';
+
+import { AuthStackParamList } from '@/navigations/stack/AuthStackNavigator';
+import CustomButton from '@/components/CustomButton';
+import { authNaviagtions } from '@/constants';
 
 type AuthHomeScreenProps = StackScreenProps<
   AuthStackParamList,
-  typeof authNavigations.AUTH_HOME
+  typeof authNaviagtions.AUTH_HOME
 >;
 
 function AuthHomeScreen({ navigation }: AuthHomeScreenProps) {
@@ -16,29 +18,30 @@ function AuthHomeScreen({ navigation }: AuthHomeScreenProps) {
         <Image
           resizeMode="contain"
           style={styles.image}
-          source={require('../../assets/MATZIP.png')}
+          source={require('@/assets/matzip.png')}
         />
       </View>
       <View style={styles.buttonContainer}>
         <CustomButton
-          label="로그인 하기"
-          variant="filled"
-          onPress={() => navigation.navigate(authNavigations.LOGIN)}
+          label="로그인하기"
+          onPress={() => navigation.navigate(authNaviagtions.LOGIN)}
         />
         <CustomButton
-          label="회원가입 하기"
+          label="회원가입하기"
           variant="outlined"
-          onPress={() => navigation.navigate(authNavigations.SIGNUP)}
+          onPress={() => navigation.navigate(authNaviagtions.SIGNUP)}
         />
       </View>
     </SafeAreaView>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: 30,
     alignItems: 'center',
+    marginHorizontal: 30,
+    marginVertical: 30,
   },
   imageContainer: {
     flex: 1.5,
@@ -50,6 +53,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flex: 1,
+    alignItems: 'center',
     gap: 10,
   },
 });
